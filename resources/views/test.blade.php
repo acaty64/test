@@ -1,9 +1,9 @@
 @extends('layouts.app')
-@section('title','Vista de Prueba')
+@section('title','Vista de Prueba Vuex')
 @section('content')
     <div class="container">
 
-		<Example-component></Example-component>
+		<Counter-app/>
 
 	</div>
 @endsection
