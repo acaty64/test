@@ -4,14 +4,15 @@
 
         <div class="panel-body">
             <h2>{{ count }}</h2>
-            <increment @increment='increment'/>
-            <decrement @decrement='decrement'/>
+            <increment />
+            <decrement />
         </div>
     </div>
 
 </template>
 
 <script>
+    import store from '../store/index.js'
     import Increment from './Increment.vue'
     import Decrement from './Decrement.vue'
 
@@ -20,21 +21,13 @@
             Increment,
             Decrement
         },
+        computed: {
+            count(){
+                return store.state.count
+            }
+        },
         mounted() {
             console.log('CounterComponent mounted.')
         },
-        data(){
-            return {
-                count: 0
-            }
-        },
-        methods: {
-            increment() {
-                this.count++
-            },
-            decrement() {
-                this.count--
-            },
-        }
     }
 </script>

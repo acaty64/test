@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
 
-		<Counter-app/>
+		<counter-app/>
 
 	</div>
 @endsection

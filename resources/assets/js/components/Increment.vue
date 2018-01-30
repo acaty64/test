@@ -3,13 +3,15 @@
 </template>
 
 <script>
+    import store from '../store/index.js'
+
     export default {
         mounted() {
             console.log('Increment.vue mounted.')
         },
         methods: {
             increment() {
-                this.$emit('increment')
+                store.commit('increment')
             },
         }
     }

@@ -3,13 +3,15 @@
 </template>
 
 <script>
+    import store from '../store/index.js'
+
     export default {
         mounted() {
             console.log('Decrement.vue mounted.')
         },
         methods: {
             decrement() {
-                this.$emit('decrement')
+                store.commit('decrement')
             },
         }
     }
