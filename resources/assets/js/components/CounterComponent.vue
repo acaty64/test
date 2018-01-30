@@ -12,7 +12,7 @@
 </template>
 
 <script>
-    import store from '../store/index.js'
+    import store from '../store/counter.js'
     import Increment from './Increment.vue'
     import Decrement from './Decrement.vue'
 

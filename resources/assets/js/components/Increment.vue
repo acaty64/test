@@ -3,7 +3,7 @@
 </template>
 
 <script>
-    import store from '../store/index.js'
+    import store from '../store/counter.js'
 
     export default {
         mounted() {
