@@ -2,7 +2,7 @@
     <div>    
         <h3>Disponibilidad de Cursos</h3>
         <ul>
-            <li v-for="item in dcursos"> {{ item.id }}</li>
+            <li v-for="item in dcursos"> {{ item.id }} {{ item.ccurso }} {{ item.wcurso }}</li>
         </ul>
     </div>
 </template>

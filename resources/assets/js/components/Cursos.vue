@@ -1,9 +1,10 @@
 <template>
     <div>
         <h3>Cursos</h3>
-        <ul>
-            <li v-for="item in cursos"> {{ item.id }}</li>
-        </ul>
+        <select v-model="item">
+            <option v-for="item in cursos" :value='item'> {{ item.wcurso }} (cód: {{ item.ccurso }} )</option>
+        </select>
+        <button @click='add_item'>Adicionar curso</button>
     </div>
 </template>
 
@@ -15,13 +16,22 @@
             console.log('Cursos.vue mounted.');
             store.dispatch('fetch_cursos');
         },
+        data(){
+            return {
+                add_id: 0,
+                item: []
+            }
+        },
         computed: {
             cursos(){
                 return store.state.cursos
             }
         },
         methods: {
-
+            add_item(){ 
+console.log('item: ',this.item);
+                store.dispatch(this.item)
+            }
         }
     }
 </script>

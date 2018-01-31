@@ -7,7 +7,8 @@ let store = new Vuex.Store({
 	state: {
 		cursos: [],
 		dcursos: [],
-		item: []
+		item: [],
+		count_sel: 0,
 	},
 	mutations: {
 		FETCH_CURSOS(state, cursos){
@@ -26,6 +27,10 @@ let store = new Vuex.Store({
 
 		delItem(state, item) {
 			state.dcursos.push(item);
+		},
+
+		count_sel(state){
+			state.count_sel = state.dcursos.length;
 		},
 	},
 
@@ -57,6 +62,10 @@ let store = new Vuex.Store({
 					wcurso: 'curso 4'
 				},
 			]);
+			commit('count_sel');
+		},
+		addItem({ commit }){
+			addItem(state, commit)
 		}
 	}
 })

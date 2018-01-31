@@ -3,9 +3,9 @@
         <div class="panel-heading">DCurso_Edit Component</div>
 
         <div class="panel-body">
-            {{ count }}
-            <cursos />
+            <p>Cursos seleccionados: {{ count_sel }}</p>          
             <dcursos />
+            <cursos />
         </div>
     </div>
 
@@ -22,8 +22,8 @@
             Dcursos
         },
         computed: {
-            count(){
-                return store.state.count
+            count_sel(){
+                return store.state.count_sel
             }
         },
         mounted() {

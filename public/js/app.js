@@ -11472,7 +11472,8 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 	state: {
 		cursos: [],
 		dcursos: [],
-		item: []
+		item: [],
+		count_sel: 0
 	},
 	mutations: {
 		FETCH_CURSOS: function FETCH_CURSOS(state, cursos) {
@@ -11488,6 +11489,9 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 		},
 		delItem: function delItem(state, item) {
 			state.dcursos.push(item);
+		},
+		count_sel: function count_sel(state) {
+			state.count_sel = state.dcursos.length;
 		}
 	},
 
@@ -11517,7 +11521,23 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 				ccurso: '000004',
 				wcurso: 'curso 4'
 			}]);
-		}
+			commit('count_sel');
+		},
+		addItem: function (_addItem) {
+			function addItem(_x) {
+				return _addItem.apply(this, arguments);
+			}
+
+			addItem.toString = function () {
+				return _addItem.toString();
+			};
+
+			return addItem;
+		}(function (_ref3) {
+			var commit = _ref3.commit;
+
+			addItem(state, commit);
+		})
 	}
 });
 
@@ -44688,8 +44708,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         Dcursos: __WEBPACK_IMPORTED_MODULE_2__Dcursos_vue___default.a
     },
     computed: {
-        count: function count() {
-            return __WEBPACK_IMPORTED_MODULE_0__store_dcurso_edit_js__["a" /* default */].state.count;
+        count_sel: function count_sel() {
+            return __WEBPACK_IMPORTED_MODULE_0__store_dcurso_edit_js__["a" /* default */].state.count_sel;
         }
     },
     mounted: function mounted() {
@@ -44760,6 +44780,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -44768,13 +44789,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         console.log('Cursos.vue mounted.');
         __WEBPACK_IMPORTED_MODULE_0__store_dcurso_edit_js__["a" /* default */].dispatch('fetch_cursos');
     },
+    data: function data() {
+        return {
+            add_id: 0,
+            item: []
+        };
+    },
 
     computed: {
         cursos: function cursos() {
             return __WEBPACK_IMPORTED_MODULE_0__store_dcurso_edit_js__["a" /* default */].state.cursos;
         }
     },
-    methods: {}
+    methods: {
+        add_item: function add_item() {
+            console.log('item: ', this.item);
+            __WEBPACK_IMPORTED_MODULE_0__store_dcurso_edit_js__["a" /* default */].dispatch(this.item);
+        }
+    }
 });
 
 /***/ }),
@@ -44789,11 +44821,40 @@ var render = function() {
     _c("h3", [_vm._v("Cursos")]),
     _vm._v(" "),
     _c(
-      "ul",
+      "select",
+      {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.item,
+            expression: "item"
+          }
+        ],
+        on: {
+          change: function($event) {
+            var $$selectedVal = Array.prototype.filter
+              .call($event.target.options, function(o) {
+                return o.selected
+              })
+              .map(function(o) {
+                var val = "_value" in o ? o._value : o.value
+                return val
+              })
+            _vm.item = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+          }
+        }
+      },
       _vm._l(_vm.cursos, function(item) {
-        return _c("li", [_vm._v(" " + _vm._s(item.id))])
+        return _c("option", { domProps: { value: item } }, [
+          _vm._v(
+            " " + _vm._s(item.wcurso) + " (cód: " + _vm._s(item.ccurso) + " )"
+          )
+        ])
       })
-    )
+    ),
+    _vm._v(" "),
+    _c("button", { on: { click: _vm.add_item } }, [_vm._v("Adicionar curso")])
   ])
 }
 var staticRenderFns = []
@@ -44900,7 +44961,16 @@ var render = function() {
     _c(
       "ul",
       _vm._l(_vm.dcursos, function(item) {
-        return _c("li", [_vm._v(" " + _vm._s(item.id))])
+        return _c("li", [
+          _vm._v(
+            " " +
+              _vm._s(item.id) +
+              " " +
+              _vm._s(item.ccurso) +
+              " " +
+              _vm._s(item.wcurso)
+          )
+        ])
       })
     )
   ])
@@ -44932,10 +45002,11 @@ var render = function() {
       "div",
       { staticClass: "panel-body" },
       [
-        _vm._v("\n        " + _vm._s(_vm.count) + "\n        "),
-        _c("cursos"),
+        _c("p", [_vm._v("Cursos seleccionados: " + _vm._s(_vm.count_sel))]),
         _vm._v(" "),
-        _c("dcursos")
+        _c("dcursos"),
+        _vm._v(" "),
+        _c("cursos")
       ],
       1
     )
