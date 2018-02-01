@@ -11475,23 +11475,35 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 		item: [],
 		count_sel: 0
 	},
+	getters: {
+		elimina: function elimina(state) {
+			return function (array, item) {
+				return array.filter(function (e) {
+					return e.curso_id !== item.curso_id;
+				});
+			};
+		},
+		count_sel: function count_sel(state) {
+			return state.dcursos.length;
+		}
+	},
 	mutations: {
 		FETCH_CURSOS: function FETCH_CURSOS(state, cursos) {
 			state.cursos = cursos;
-			console.log('cursos', cursos);
 		},
 		FETCH_DCURSOS: function FETCH_DCURSOS(state, dcursos) {
 			state.dcursos = dcursos;
-			console.log('dcursos', dcursos);
 		},
-		addItem: function addItem(state, item) {
-			state.dcursos.push(item);
+		ADD_ITEM: function ADD_ITEM(state, item) {
+			state.dcursos.push(store.item);
+			state.cursos = store.getters.elimina(state.cursos, store.item);
 		},
-		delItem: function delItem(state, item) {
-			state.dcursos.push(item);
+		DEL_ITEM: function DEL_ITEM(state, item) {
+			state.dcursos = store.getters.elimina(state.dcursos, store.item);
+			state.cursos.push(store.item);
 		},
 		count_sel: function count_sel(state) {
-			state.count_sel = state.dcursos.length;
+			state.count_sel = store.getters.count_sel;
 		}
 	},
 
@@ -11500,15 +11512,18 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 			var commit = _ref.commit;
 
 			commit('FETCH_CURSOS', [{
-				id: 1,
+				index: 0,
+				curso_id: 1,
 				ccurso: '000001',
 				wcurso: 'curso 1'
 			}, {
-				id: 2,
+				index: 1,
+				curso_id: 2,
 				ccurso: '000002',
 				wcurso: 'curso 2'
 			}, {
-				id: 3,
+				index: 2,
+				curso_id: 3,
 				ccurso: '000003',
 				wcurso: 'curso 3'
 			}]);
@@ -11517,27 +11532,23 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 			var commit = _ref2.commit;
 
 			commit('FETCH_DCURSOS', [{
-				id: 4,
+				index: 0,
+				curso_id: 4,
 				ccurso: '000004',
 				wcurso: 'curso 4'
 			}]);
 			commit('count_sel');
 		},
-		addItem: function (_addItem) {
-			function addItem(_x) {
-				return _addItem.apply(this, arguments);
-			}
-
-			addItem.toString = function () {
-				return _addItem.toString();
-			};
-
-			return addItem;
-		}(function (_ref3) {
+		add_item: function add_item(_ref3) {
 			var commit = _ref3.commit;
 
-			addItem(state, commit);
-		})
+			commit('ADD_ITEM');
+		},
+		del_item: function del_item(_ref4) {
+			var commit = _ref4.commit;
+
+			commit('DEL_ITEM');
+		}
 	}
 });
 
@@ -44709,7 +44720,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     computed: {
         count_sel: function count_sel() {
-            return __WEBPACK_IMPORTED_MODULE_0__store_dcurso_edit_js__["a" /* default */].state.count_sel;
+            return __WEBPACK_IMPORTED_MODULE_0__store_dcurso_edit_js__["a" /* default */].getters.count_sel;
         }
     },
     mounted: function mounted() {
@@ -44791,7 +44802,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     data: function data() {
         return {
-            add_id: 0,
             item: []
         };
     },
@@ -44803,8 +44813,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         add_item: function add_item() {
-            console.log('item: ', this.item);
-            __WEBPACK_IMPORTED_MODULE_0__store_dcurso_edit_js__["a" /* default */].dispatch(this.item);
+            this.item.index = __WEBPACK_IMPORTED_MODULE_0__store_dcurso_edit_js__["a" /* default */].state.count_sel;
+            __WEBPACK_IMPORTED_MODULE_0__store_dcurso_edit_js__["a" /* default */].item = this.item;
+            __WEBPACK_IMPORTED_MODULE_0__store_dcurso_edit_js__["a" /* default */].dispatch('add_item');
         }
     }
 });
@@ -44938,13 +44949,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         console.log('Dcursos.vue mounted.');
         __WEBPACK_IMPORTED_MODULE_0__store_dcurso_edit_js__["a" /* default */].dispatch('fetch_dcursos');
     },
+    data: function data() {
+        return {
+            item: [],
+            id: 0
+        };
+    },
 
     computed: {
         dcursos: function dcursos() {
             return __WEBPACK_IMPORTED_MODULE_0__store_dcurso_edit_js__["a" /* default */].state.dcursos;
         }
     },
-    methods: {}
+    methods: {
+        del_item: function del_item() {
+            __WEBPACK_IMPORTED_MODULE_0__store_dcurso_edit_js__["a" /* default */].item = __WEBPACK_IMPORTED_MODULE_0__store_dcurso_edit_js__["a" /* default */].state.dcursos[this.id];
+            __WEBPACK_IMPORTED_MODULE_0__store_dcurso_edit_js__["a" /* default */].dispatch('del_item');
+        }
+    }
 });
 
 /***/ }),
@@ -44960,16 +44982,27 @@ var render = function() {
     _vm._v(" "),
     _c(
       "ul",
+      {
+        model: {
+          value: _vm.item,
+          callback: function($$v) {
+            _vm.item = $$v
+          },
+          expression: "item"
+        }
+      },
       _vm._l(_vm.dcursos, function(item) {
-        return _c("li", [
+        return _c("li", { attrs: { value: _vm.id } }, [
           _vm._v(
-            " " +
-              _vm._s(item.id) +
+            _vm._s(item.index) +
+              " - " +
+              _vm._s(item.curso_id) +
               " " +
               _vm._s(item.ccurso) +
               " " +
               _vm._s(item.wcurso)
-          )
+          ),
+          _c("span", { on: { click: _vm.del_item } }, [_vm._v("X")])
         ])
       })
     )

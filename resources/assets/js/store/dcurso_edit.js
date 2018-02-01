@@ -10,27 +10,36 @@ let store = new Vuex.Store({
 		item: [],
 		count_sel: 0,
 	},
+	getters:{
+		elimina(state){
+			return function (array, item){
+				return array.filter(e=> e.curso_id!==item.curso_id);
+			};
+		},
+		count_sel(state){
+			return state.dcursos.length;
+		},
+	},
 	mutations: {
 		FETCH_CURSOS(state, cursos){
 			state.cursos = cursos;
-			console.log('cursos',cursos);
 		},
 
 		FETCH_DCURSOS(state, dcursos){
-			state.dcursos = dcursos;
-			console.log('dcursos',dcursos);			
+			state.dcursos = dcursos;			
 		},
 
-		addItem(state, item) {
-			state.dcursos.push(item);
+		ADD_ITEM(state, item) {
+			state.dcursos.push(store.item);
+			state.cursos = store.getters.elimina(state.cursos, store.item);
 		},
 
-		delItem(state, item) {
-			state.dcursos.push(item);
+		DEL_ITEM(state, item) {
+			state.dcursos = store.getters.elimina(state.dcursos, store.item);
+			state.cursos.push(store.item);
 		},
-
 		count_sel(state){
-			state.count_sel = state.dcursos.length;
+			state.count_sel = store.getters.count_sel;
 		},
 	},
 
@@ -38,35 +47,46 @@ let store = new Vuex.Store({
 		fetch_cursos({ commit }){
 			commit('FETCH_CURSOS', [
 				{
-					id: 1,
+					index: 0,
+					curso_id: 1,
 					ccurso: '000001',
 					wcurso: 'curso 1'
 				},
 				{
-					id: 2,
+					index: 1,
+					curso_id: 2,
 					ccurso: '000002',
 					wcurso: 'curso 2'
 				},
 				{
-					id: 3,
+					index: 2,
+					curso_id: 3,
 					ccurso: '000003',
 					wcurso: 'curso 3'
 				},
 			]);			
 		},
+
 		fetch_dcursos({ commit }){			
 			commit('FETCH_DCURSOS', [
 				{
-					id: 4,
+					index: 0,
+					curso_id: 4,
 					ccurso: '000004',
 					wcurso: 'curso 4'
 				},
 			]);
 			commit('count_sel');
 		},
-		addItem({ commit }){
-			addItem(state, commit)
-		}
+
+		add_item({ commit }){
+			commit('ADD_ITEM');
+		},
+
+		del_item({ commit }){
+			commit('DEL_ITEM');
+		},
+
 	}
 })
 

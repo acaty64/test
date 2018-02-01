@@ -18,7 +18,6 @@
         },
         data(){
             return {
-                add_id: 0,
                 item: []
             }
         },
@@ -28,9 +27,10 @@
             }
         },
         methods: {
-            add_item(){ 
-console.log('item: ',this.item);
-                store.dispatch(this.item)
+            add_item(){
+                this.item.index = store.state.count_sel; 
+                store.item = this.item;
+                store.dispatch('add_item');
             }
         }
     }

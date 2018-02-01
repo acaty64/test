@@ -23,7 +23,7 @@
         },
         computed: {
             count_sel(){
-                return store.state.count_sel
+                return store.getters.count_sel
             }
         },
         mounted() {
