@@ -19,6 +19,30 @@ let store = new Vuex.Store({
 		count_sel(state){
 			return state.dcursos.length;
 		},
+		sort_cursos(state){ 
+			return state.cursos.sort(function (a, b) {
+				if (a.wcurso > b.wcurso) {
+				    return 1;
+				}
+				if (a.wcurso < b.wcurso) {
+				    return -1;
+				}
+				  // a must be equal to b
+				return 0;
+			});
+		},
+		sort_dcursos(state){ 
+			return state.dcursos.sort(function (a, b) {
+				if (a.wcurso > b.wcurso) {
+				    return 1;
+				}
+				if (a.wcurso < b.wcurso) {
+				    return -1;
+				}
+				  // a must be equal to b
+				return 0;
+			});
+		}
 	},
 	mutations: {
 		FETCH_CURSOS(state, cursos){
@@ -29,15 +53,22 @@ let store = new Vuex.Store({
 			state.dcursos = dcursos;			
 		},
 
-		ADD_ITEM(state, item) {
-			state.dcursos.push(store.item);
-			state.cursos = store.getters.elimina(state.cursos, store.item);
+		ADD_ITEM(state) {
+//console.log('ADD_ITEM.state.item: ', state.item);
+			state.item.index = store.getters.count_sel;
+			state.dcursos.push(state.item);
+			state.cursos = store.getters.elimina(state.cursos, state.item);
+			//state.dcursos = store.getters.sort_dcursos();
 		},
 
-		DEL_ITEM(state, item) {
-			state.dcursos = store.getters.elimina(state.dcursos, store.item);
-			state.cursos.push(store.item);
+		DEL_ITEM(state) {
+//console.log('DEL_ITEM.state.item: ', state.item);
+			state.item[0].index = state.item[0].curso_id;
+			state.cursos.push(state.item[0]);
+			state.dcursos = store.getters.elimina(state.dcursos, state.item[0]);
+			//state.cursos = store.getters.sort_cursos();
 		},
+
 		count_sel(state){
 			state.count_sel = store.getters.count_sel;
 		},
@@ -74,6 +105,12 @@ let store = new Vuex.Store({
 					curso_id: 4,
 					ccurso: '000004',
 					wcurso: 'curso 4'
+				},				
+				{
+					index: 1,
+					curso_id: 5,
+					ccurso: '000005',
+					wcurso: 'curso 5'
 				},
 			]);
 			commit('count_sel');

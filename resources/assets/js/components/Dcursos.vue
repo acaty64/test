@@ -1,9 +1,10 @@
 <template>
     <div>    
         <h3>Disponibilidad de Cursos</h3>
-        <ul v-model='item'>
-            <li v-for="item in dcursos" :value='id'>{{item.index}} - {{ item.curso_id }} {{ item.ccurso }} {{ item.wcurso }}<span @click="del_item">X</span></li>
-        </ul>
+        <select multiple v-model='item'>
+            <option v-for="dcurso in dcursos" :value='dcurso'>{{dcurso.index}} - {{ dcurso.curso_id }} {{ dcurso.ccurso }} {{ dcurso.wcurso }}</option>
+        </select>
+        <button @click="del_item" >Deseleccionar</button>
     </div>
 </template>
 
@@ -28,7 +29,9 @@
         },
         methods: {
             del_item(){
-                store.item = store.state.dcursos[this.id];
+console.log('Dcursos2.vue [this.item]: ', this.item);
+                //store.state.item = store.state.dcursos[this.id];
+                store.state.item = this.item;
                 store.dispatch('del_item');
             },
         }

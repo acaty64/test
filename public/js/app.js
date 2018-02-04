@@ -11485,6 +11485,30 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 		},
 		count_sel: function count_sel(state) {
 			return state.dcursos.length;
+		},
+		sort_cursos: function sort_cursos(state) {
+			return state.cursos.sort(function (a, b) {
+				if (a.wcurso > b.wcurso) {
+					return 1;
+				}
+				if (a.wcurso < b.wcurso) {
+					return -1;
+				}
+				// a must be equal to b
+				return 0;
+			});
+		},
+		sort_dcursos: function sort_dcursos(state) {
+			return state.dcursos.sort(function (a, b) {
+				if (a.wcurso > b.wcurso) {
+					return 1;
+				}
+				if (a.wcurso < b.wcurso) {
+					return -1;
+				}
+				// a must be equal to b
+				return 0;
+			});
 		}
 	},
 	mutations: {
@@ -11494,13 +11518,19 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 		FETCH_DCURSOS: function FETCH_DCURSOS(state, dcursos) {
 			state.dcursos = dcursos;
 		},
-		ADD_ITEM: function ADD_ITEM(state, item) {
-			state.dcursos.push(store.item);
-			state.cursos = store.getters.elimina(state.cursos, store.item);
+		ADD_ITEM: function ADD_ITEM(state) {
+			//console.log('ADD_ITEM.state.item: ', state.item);
+			state.item.index = store.getters.count_sel;
+			state.dcursos.push(state.item);
+			state.cursos = store.getters.elimina(state.cursos, state.item);
+			state.dcursos = store.getters.sort_dcursos();
 		},
-		DEL_ITEM: function DEL_ITEM(state, item) {
-			state.dcursos = store.getters.elimina(state.dcursos, store.item);
-			state.cursos.push(store.item);
+		DEL_ITEM: function DEL_ITEM(state) {
+			//console.log('DEL_ITEM.state.item: ', state.item);
+			state.item[0].index = state.item[0].curso_id;
+			state.cursos.push(state.item[0]);
+			state.dcursos = store.getters.elimina(state.dcursos, state.item[0]);
+			state.cursos = store.getters.sort_cursos();
 		},
 		count_sel: function count_sel(state) {
 			state.count_sel = store.getters.count_sel;
@@ -11536,6 +11566,11 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 				curso_id: 4,
 				ccurso: '000004',
 				wcurso: 'curso 4'
+			}, {
+				index: 1,
+				curso_id: 5,
+				ccurso: '000005',
+				wcurso: 'curso 5'
 			}]);
 			commit('count_sel');
 		},
@@ -44813,8 +44848,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         add_item: function add_item() {
-            this.item.index = __WEBPACK_IMPORTED_MODULE_0__store_dcurso_edit_js__["a" /* default */].state.count_sel;
-            __WEBPACK_IMPORTED_MODULE_0__store_dcurso_edit_js__["a" /* default */].item = this.item;
+            /*                this.item.index = store.state.count_sel; 
+            console.log('Cursos.vue add_item.item: ',this.item);
+            */
+            __WEBPACK_IMPORTED_MODULE_0__store_dcurso_edit_js__["a" /* default */].state.item = this.item;
             __WEBPACK_IMPORTED_MODULE_0__store_dcurso_edit_js__["a" /* default */].dispatch('add_item');
         }
     }
@@ -44859,7 +44896,13 @@ var render = function() {
       _vm._l(_vm.cursos, function(item) {
         return _c("option", { domProps: { value: item } }, [
           _vm._v(
-            " " + _vm._s(item.wcurso) + " (cód: " + _vm._s(item.ccurso) + " )"
+            " " +
+              _vm._s(item.index) +
+              " - " +
+              _vm._s(item.wcurso) +
+              " (cód: " +
+              _vm._s(item.ccurso) +
+              " )"
           )
         ])
       })
@@ -44941,6 +44984,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -44963,7 +45007,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         del_item: function del_item() {
-            __WEBPACK_IMPORTED_MODULE_0__store_dcurso_edit_js__["a" /* default */].item = __WEBPACK_IMPORTED_MODULE_0__store_dcurso_edit_js__["a" /* default */].state.dcursos[this.id];
+            console.log('Dcursos2.vue [this.item]: ', this.item);
+            //store.state.item = store.state.dcursos[this.id];
+            __WEBPACK_IMPORTED_MODULE_0__store_dcurso_edit_js__["a" /* default */].state.item = this.item;
             __WEBPACK_IMPORTED_MODULE_0__store_dcurso_edit_js__["a" /* default */].dispatch('del_item');
         }
     }
@@ -44981,31 +45027,47 @@ var render = function() {
     _c("h3", [_vm._v("Disponibilidad de Cursos")]),
     _vm._v(" "),
     _c(
-      "ul",
+      "select",
       {
-        model: {
-          value: _vm.item,
-          callback: function($$v) {
-            _vm.item = $$v
-          },
-          expression: "item"
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.item,
+            expression: "item"
+          }
+        ],
+        attrs: { multiple: "" },
+        on: {
+          change: function($event) {
+            var $$selectedVal = Array.prototype.filter
+              .call($event.target.options, function(o) {
+                return o.selected
+              })
+              .map(function(o) {
+                var val = "_value" in o ? o._value : o.value
+                return val
+              })
+            _vm.item = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+          }
         }
       },
-      _vm._l(_vm.dcursos, function(item) {
-        return _c("li", { attrs: { value: _vm.id } }, [
+      _vm._l(_vm.dcursos, function(dcurso) {
+        return _c("option", { domProps: { value: dcurso } }, [
           _vm._v(
-            _vm._s(item.index) +
+            _vm._s(dcurso.index) +
               " - " +
-              _vm._s(item.curso_id) +
+              _vm._s(dcurso.curso_id) +
               " " +
-              _vm._s(item.ccurso) +
+              _vm._s(dcurso.ccurso) +
               " " +
-              _vm._s(item.wcurso)
-          ),
-          _c("span", { on: { click: _vm.del_item } }, [_vm._v("X")])
+              _vm._s(dcurso.wcurso)
+          )
         ])
       })
-    )
+    ),
+    _vm._v(" "),
+    _c("button", { on: { click: _vm.del_item } }, [_vm._v("Deseleccionar")])
   ])
 }
 var staticRenderFns = []

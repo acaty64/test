@@ -2,7 +2,7 @@
     <div>
         <h3>Cursos</h3>
         <select v-model="item">
-            <option v-for="item in cursos" :value='item'> {{ item.wcurso }} (cód: {{ item.ccurso }} )</option>
+            <option v-for="item in cursos" :value='item'> {{ item.index }} - {{ item.wcurso }} (cód: {{ item.ccurso }} )</option>
         </select>
         <button @click='add_item'>Adicionar curso</button>
     </div>
@@ -28,8 +28,10 @@
         },
         methods: {
             add_item(){
-                this.item.index = store.state.count_sel; 
-                store.item = this.item;
+/*                this.item.index = store.state.count_sel; 
+console.log('Cursos.vue add_item.item: ',this.item);
+*/
+                store.state.item = this.item;
                 store.dispatch('add_item');
             }
         }
