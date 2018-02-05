@@ -3,7 +3,7 @@
 </template>
 
 <script>
-    import store from '../store/counter.js'
+    import CountStore from '../store/counter.js'
 
     export default {
         mounted() {
@@ -11,7 +11,7 @@
         },
         methods: {
             increment() {
-                store.commit('increment')
+                CountStore.commit('increment')
             },
         }
     }

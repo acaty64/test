@@ -484,6 +484,35 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 /* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(13);
+
+
+
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
+
+var CountStore = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
+	state: {
+		count: 0
+	},
+	mutations: {
+		increment: function increment(state) {
+			state.count++;
+		},
+		decrement: function decrement(state) {
+			state.count--;
+		}
+	}
+});
+
+/* harmony default export */ __webpack_exports__["a"] = (CountStore);
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports) {
 
 var g;
@@ -508,35 +537,6 @@ try {
 
 module.exports = g;
 
-
-/***/ }),
-/* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(13);
-
-
-
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
-
-var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
-	state: {
-		count: 0
-	},
-	mutations: {
-		increment: function increment(state) {
-			state.count++;
-		},
-		decrement: function decrement(state) {
-			state.count--;
-		}
-	}
-});
-
-/* harmony default export */ __webpack_exports__["a"] = (store);
 
 /***/ }),
 /* 4 */
@@ -11453,7 +11453,7 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(40).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(40).setImmediate))
 
 /***/ }),
 /* 6 */
@@ -11468,7 +11468,7 @@ module.exports = Vue$3;
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
 
-var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
+var DCursoStore = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 	state: {
 		cursos: [],
 		dcursos: [],
@@ -11520,20 +11520,20 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 		},
 		ADD_ITEM: function ADD_ITEM(state) {
 			//console.log('ADD_ITEM.state.item: ', state.item);
-			state.item.index = store.getters.count_sel;
+			state.item.index = DCursoStore.getters.count_sel;
 			state.dcursos.push(state.item);
-			state.cursos = store.getters.elimina(state.cursos, state.item);
-			state.dcursos = store.getters.sort_dcursos();
+			state.cursos = DCursoStore.getters.elimina(state.cursos, state.item);
+			//state.dcursos = store.getters.sort_dcursos();
 		},
 		DEL_ITEM: function DEL_ITEM(state) {
 			//console.log('DEL_ITEM.state.item: ', state.item);
 			state.item[0].index = state.item[0].curso_id;
 			state.cursos.push(state.item[0]);
-			state.dcursos = store.getters.elimina(state.dcursos, state.item[0]);
-			state.cursos = store.getters.sort_cursos();
+			state.dcursos = DCursoStore.getters.elimina(state.dcursos, state.item[0]);
+			//state.cursos = store.getters.sort_cursos();
 		},
 		count_sel: function count_sel(state) {
-			state.count_sel = store.getters.count_sel;
+			state.count_sel = DCursoStore.getters.count_sel;
 		}
 	},
 
@@ -11587,7 +11587,7 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 	}
 });
 
-/* harmony default export */ __webpack_exports__["a"] = (store);
+/* harmony default export */ __webpack_exports__["a"] = (DCursoStore);
 
 /***/ }),
 /* 7 */
@@ -13002,8 +13002,12 @@ module.exports = __webpack_require__(66);
 
 /***/ }),
 /* 15 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_counter_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store_dcurso_edit_js__ = __webpack_require__(6);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -13025,8 +13029,13 @@ Vue.component('example-component', __webpack_require__(42));
 Vue.component('counter-app', __webpack_require__(45));
 Vue.component('dcurso-edit', __webpack_require__(57));
 
+
+
+
 var app = new Vue({
-  el: '#app'
+  el: '#app',
+  CountStore: __WEBPACK_IMPORTED_MODULE_0__store_counter_js__["a" /* default */],
+  DCursoStore: __WEBPACK_IMPORTED_MODULE_1__store_dcurso_edit_js__["a" /* default */]
 });
 
 /***/ }),
@@ -30179,7 +30188,7 @@ if (token) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(18)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(18)(module)))
 
 /***/ }),
 /* 18 */
@@ -43918,7 +43927,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
 /* 41 */
@@ -44111,7 +44120,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(8)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(8)))
 
 /***/ }),
 /* 42 */
@@ -44285,7 +44294,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_counter_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_counter_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__CounterComponent_vue__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__CounterComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__CounterComponent_vue__);
 //
@@ -44305,6 +44314,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 
@@ -44375,7 +44385,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_counter_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_counter_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Increment_vue__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Increment_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Increment_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Decrement_vue__ = __webpack_require__(52);
@@ -44405,6 +44415,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     computed: {
         count: function count() {
+            //return store.state.count
             return __WEBPACK_IMPORTED_MODULE_0__store_counter_js__["a" /* default */].state.count;
         }
     },
@@ -44466,7 +44477,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_counter_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_counter_js__ = __webpack_require__(2);
 //
 //
 //
@@ -44563,7 +44574,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_counter_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_counter_js__ = __webpack_require__(2);
 //
 //
 //
@@ -44725,11 +44736,10 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_dcurso_edit_js__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Cursos_vue__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Cursos_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Cursos_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Dcursos_vue__ = __webpack_require__(62);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Dcursos_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Dcursos_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Cursos_vue__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Cursos_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Cursos_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Dcursos_vue__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Dcursos_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Dcursos_vue__);
 //
 //
 //
@@ -44744,18 +44754,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
-
+//import DCursoStore from '../store/dcurso_edit.js'
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {
-        Cursos: __WEBPACK_IMPORTED_MODULE_1__Cursos_vue___default.a,
-        Dcursos: __WEBPACK_IMPORTED_MODULE_2__Dcursos_vue___default.a
+        Cursos: __WEBPACK_IMPORTED_MODULE_0__Cursos_vue___default.a,
+        Dcursos: __WEBPACK_IMPORTED_MODULE_1__Dcursos_vue___default.a
     },
     computed: {
         count_sel: function count_sel() {
-            return __WEBPACK_IMPORTED_MODULE_0__store_dcurso_edit_js__["a" /* default */].getters.count_sel;
+            return this.$DCursoStore.getters.count_sel;
         }
     },
     mounted: function mounted() {

@@ -12,7 +12,7 @@
 </template>
 
 <script>
-    import store from '../store/counter.js'
+    import CountStore from '../store/counter.js'
     import Increment from './Increment.vue'
     import Decrement from './Decrement.vue'
 
@@ -23,7 +23,8 @@
         },
         computed: {
             count(){
-                return store.state.count
+                //return store.state.count
+                return CountStore.state.count
             }
         },
         mounted() {

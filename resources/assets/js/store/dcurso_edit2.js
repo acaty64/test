@@ -1,9 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import vSelect from 'vue-select'
+Vue.component('v-select', vSelect)
 
 Vue.use(Vuex)
 
-let DCursoStore = new Vuex.Store({
+let store = new Vuex.Store({
 	state: {
 		cursos: [],
 		dcursos: [],
@@ -55,9 +57,9 @@ let DCursoStore = new Vuex.Store({
 
 		ADD_ITEM(state) {
 //console.log('ADD_ITEM.state.item: ', state.item);
-			state.item.index = DCursoStore.getters.count_sel;
+			state.item.index = store.getters.count_sel;
 			state.dcursos.push(state.item);
-			state.cursos = DCursoStore.getters.elimina(state.cursos, state.item);
+			state.cursos = store.getters.elimina(state.cursos, state.item);
 			//state.dcursos = store.getters.sort_dcursos();
 		},
 
@@ -65,12 +67,12 @@ let DCursoStore = new Vuex.Store({
 //console.log('DEL_ITEM.state.item: ', state.item);
 			state.item[0].index = state.item[0].curso_id;
 			state.cursos.push(state.item[0]);
-			state.dcursos = DCursoStore.getters.elimina(state.dcursos, state.item[0]);
+			state.dcursos = store.getters.elimina(state.dcursos, state.item[0]);
 			//state.cursos = store.getters.sort_cursos();
 		},
 
 		count_sel(state){
-			state.count_sel = DCursoStore.getters.count_sel;
+			state.count_sel = store.getters.count_sel;
 		},
 	},
 
@@ -78,22 +80,26 @@ let DCursoStore = new Vuex.Store({
 		fetch_cursos({ commit }){
 			commit('FETCH_CURSOS', [
 				{
-					index: 0,
-					curso_id: 1,
-					ccurso: '000001',
-					wcurso: 'curso 1'
+					value: '000001',
+					label: 'curso 1',
 				},
 				{
-					index: 1,
-					curso_id: 2,
-					ccurso: '000002',
-					wcurso: 'curso 2'
+					value: '000002',
+					label: 'curso 2'				
 				},
 				{
-					index: 2,
-					curso_id: 3,
-					ccurso: '000003',
-					wcurso: 'curso 3'
+					value: '000003',
+					label: 'curso 3'				
+				},
+				{
+					value: '000004',
+					label: 'curso 4'
+				
+				},				
+				{
+					value: '000005',
+					label: 'curso 5'
+				
 				},
 			]);			
 		},
@@ -101,16 +107,14 @@ let DCursoStore = new Vuex.Store({
 		fetch_dcursos({ commit }){			
 			commit('FETCH_DCURSOS', [
 				{
-					index: 0,
-					curso_id: 4,
-					ccurso: '000004',
-					wcurso: 'curso 4'
+					value: '000004',
+					label: 'curso 4'
+				
 				},				
 				{
-					index: 1,
-					curso_id: 5,
-					ccurso: '000005',
-					wcurso: 'curso 5'
+					value: '000005',
+					label: 'curso 5'
+				
 				},
 			]);
 			commit('count_sel');
@@ -127,4 +131,4 @@ let DCursoStore = new Vuex.Store({
 	}
 })
 
-export default DCursoStore
+export default store

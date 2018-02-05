@@ -12,7 +12,7 @@
 </template>
 
 <script>
-    import store from '../store/dcurso_edit.js'
+    //import DCursoStore from '../store/dcurso_edit.js'
     import Cursos from './Cursos.vue'
     import Dcursos from './Dcursos.vue'
 
@@ -23,7 +23,7 @@
         },
         computed: {
             count_sel(){
-                return store.getters.count_sel
+                return this.$DCursoStore.getters.count_sel
             }
         },
         mounted() {

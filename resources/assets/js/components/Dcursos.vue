@@ -9,12 +9,12 @@
 </template>
 
 <script>
-    import store from '../store/dcurso_edit.js'
+    import DCursoStore from '../store/dcurso_edit.js'
 
     export default {
         mounted() {
             console.log('Dcursos.vue mounted.');
-            store.dispatch('fetch_dcursos');
+            DCursoStore.dispatch('fetch_dcursos');
         },
         data(){
             return {
@@ -24,15 +24,15 @@
         },
         computed: {
             dcursos(){
-                return store.state.dcursos
+                return DCursoStore.state.dcursos
             }
         },
         methods: {
             del_item(){
 console.log('Dcursos2.vue [this.item]: ', this.item);
                 //store.state.item = store.state.dcursos[this.id];
-                store.state.item = this.item;
-                store.dispatch('del_item');
+                DCursoStore.state.item = this.item;
+                DCursoStore.dispatch('del_item');
             },
         }
     }

@@ -16,15 +16,16 @@
 </template>
 
 <script>
-    import store from '../store/counter.js'
+    import CountStore from '../store/counter.js'
     import Counter from './CounterComponent.vue'
+    
     export default {
         components: {
             Counter
         },
         computed:{
             count(){
-                return store.state.count;
+                return CountStore.state.count;
             }
         },
         mounted() {
