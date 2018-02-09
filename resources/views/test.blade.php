@@ -3,7 +3,8 @@
 @section('content')
     <div class="container">
 
-		<Example-component></Example-component>
+		<!--Example-component></Example-component-->
+		<App></App>
 
 	</div>
 @endsection

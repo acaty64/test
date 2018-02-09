@@ -16,7 +16,18 @@ window.Vue = require('vue');
  */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component('App', require('./components/App.vue'));
 
+/*
 const app = new Vue({
     el: '#app'
 });
+*/
+
+import Vue from 'vue'
+//import App from './components/App.vue'
+
+new Vue({
+  el: '#app',
+//  render: h => h(App)
+})
