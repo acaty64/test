@@ -11,12 +11,28 @@
 
 <script>
     export default {
+        /* Con Vuex no necesitamos props; debe incluirse computed  
         props: ['users'],
+        */
+        computed: {
+            users() {
+                /* Agregar filtro */
+                return this.$store.state.users.filter(user => {
+                    return !user.registered;
+                });
+            }
+        },
         methods: {
             registerUser(user) {
-                this.$emit('userRegistered', user);
+                /* Viene de App.vue methods userRegistered(user) */
+                const date = new Date;
+                /** Con Vuex no se necesita emitir */
+                //this.$emit('userRegistered', user);
+
+                /* Viene de App.vue methods userRegistered(user) AGREGAR $store.state*/
                 user.registered = true;
-            }
+                this.$store.state.registrations.push({userId: user.id, name: user.name, date: date.getMonth() + '/' + date.getDay()})
+            },
         }
     }
 </script>

@@ -15,17 +15,34 @@
 
 <script>
     export default {
+    	/* Con Vuex no necesitamos props; debe incluirse computed 
         props: ['registrations'],
+    	 */
+        computed: {
+        	/** AGREGAR $store.state */
+            registrations(){
+                return this.$store.state.registrations;
+            },
+
+        	/** AGREGAR $store.state */
+            total() {
+                return this.$store.state.registrations.length;
+            },
+        },
+
         methods: {
             unregister(registration) {
+            	/* Con Vuex no se necesita emit 
                 this.$emit('userUnregistered', registration);
+                */
+                /* Viene de App.vue AGREGAR $store.state*/
+                const user = this.$store.state.users.find(user => {
+              		return user.id == registration.userId;
+	          	});
+	          	user.registered = false;
+	          	this.$store.state.registrations.splice(this.$store.state.registrations.indexOf(registration), 1);
             }
         },
-        computed: {
-            total() {
-                return this.registrations.length;
-            }
-        }
     }
 </script>
 
