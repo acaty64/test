@@ -13144,7 +13144,7 @@ var index_esm = {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(15);
-module.exports = __webpack_require__(62);
+module.exports = __webpack_require__(65);
 
 
 /***/ }),
@@ -13155,7 +13155,7 @@ module.exports = __webpack_require__(62);
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store_js__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store_store_js__ = __webpack_require__(61);
 
 /************ En el video main.js */
 
@@ -13190,7 +13190,7 @@ const app = new Vue({
 
 new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
   el: '#app',
-  store: __WEBPACK_IMPORTED_MODULE_1__store_js__["a" /* store */]
+  store: __WEBPACK_IMPORTED_MODULE_1__store_store_js__["a" /* store */]
   //  render: h => h(App)
 });
 
@@ -44995,6 +44995,13 @@ if (false) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__getters__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mutations__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__actions__ = __webpack_require__(64);
+
+
+
+
 
 
 
@@ -45006,64 +45013,76 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
         users: [{ id: 1, name: 'Max', registered: false }, { id: 2, name: 'Anna', registered: false }, { id: 3, name: 'Chris', registered: false }, { id: 4, name: 'Sven', registered: false }]
     },
 
-    getters: {
-        unregisteredUsers: function unregisteredUsers(state) {
-            return state.users.filter(function (user) {
-                return !user.registered;
-            });
-        },
-        registrations: function registrations(state) {
-            return state.registrations;
-        },
-        totalRegistrations: function totalRegistrations(state) {
-            return state.registrations.length;
-        }
-    },
-
-    mutations: {
-        register: function register(state, userId) {
-            var date = new Date();
-            var user = state.users.find(function (user) {
-                return user.id == userId;
-            });
-            user.registered = true;
-            var registration = {
-                userId: userId,
-                name: user.name,
-                date: date.getMonth() + '/' + date.getDay()
-            };
-            state.registrations.push(registration);
-        },
-        unregister: function unregister(state, payload) {
-            var user = state.users.find(function (user) {
-                return user.id == payload.userId;
-            });
-            user.registered = false;
-            var registration = state.registrations.find(function (registration) {
-                return registration.userId == payload.userId;
-            });
-            state.registrations.splice(state.registrations.indexOf(registration), 1);
-            /*
-            const user = this.$store.state.users.find(user => {
-                return user.id == registration.userId;
-            });
-            user.registered = false;
-            this.$store.state.registrations.splice(this.$store.state.registrations.indexOf(registration), 1);
-            */
-        }
-    },
-
-    actions: {
-        register: function register(context, userId) {
-            /** Viene de Registration.vue */
-            context.commit('register', userId);
-        }
-    }
+    getters: __WEBPACK_IMPORTED_MODULE_2__getters__["a" /* default */],
+    mutations: __WEBPACK_IMPORTED_MODULE_3__mutations__["a" /* default */],
+    actions: __WEBPACK_IMPORTED_MODULE_4__actions__["a" /* default */]
 
 });
 
 /***/ }),
 /* 62 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+    unregisteredUsers: function unregisteredUsers(state) {
+        return state.users.filter(function (user) {
+            return !user.registered;
+        });
+    },
+    registrations: function registrations(state) {
+        return state.registrations;
+    },
+    totalRegistrations: function totalRegistrations(state) {
+        return state.registrations.length;
+    }
+});
+
+/***/ }),
+/* 63 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+    register: function register(state, userId) {
+        var date = new Date();
+        var user = state.users.find(function (user) {
+            return user.id == userId;
+        });
+        user.registered = true;
+        var registration = {
+            userId: userId,
+            name: user.name,
+            date: date.getMonth() + '/' + date.getDay()
+        };
+        state.registrations.push(registration);
+    },
+    unregister: function unregister(state, payload) {
+        var user = state.users.find(function (user) {
+            return user.id == payload.userId;
+        });
+        user.registered = false;
+        var registration = state.registrations.find(function (registration) {
+            return registration.userId == payload.userId;
+        });
+        state.registrations.splice(state.registrations.indexOf(registration), 1);
+    }
+});
+
+/***/ }),
+/* 64 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+    register: function register(context, userId) {
+        /** Viene de Registration.vue */
+        context.commit('register', userId);
+    }
+});
+
+/***/ }),
+/* 65 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
