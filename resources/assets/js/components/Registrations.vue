@@ -22,35 +22,20 @@
                         registrations: 'registrations',
                         total: 'totalRegistrations',
                     }),
-
-            otherComputed(){
-                /// Otras computed del componente particular
-            },
         },
-            /* Al agregar mapGetters ya no necesitamos los computed individuales 
-            /***  Agregar getters   
-            registrations(){
-                return this.$store.getters.registrations;
-            },
-
-            /***  Agregar getters   
-            total() {
-                return this.$store.getters.totalRegistrations;
-            },
-        },
-            */
-
         methods: {
             unregister(registration) {
-            	/* Con Vuex no se necesita emit 
-                this.$emit('userUnregistered', registration);
-                */
-                /* Viene de App.vue AGREGAR $store.state*/
+                this.$store.commit({
+                    type: 'unregister',
+                    userId: registration.userId
+                });
+                /*** Va a store.js mutations 
                 const user = this.$store.state.users.find(user => {
               		return user.id == registration.userId;
 	          	});
 	          	user.registered = false;
 	          	this.$store.state.registrations.splice(this.$store.state.registrations.indexOf(registration), 1);
+                */
             }
         },
     }

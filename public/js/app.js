@@ -44710,14 +44710,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         registerUser: function registerUser(user) {
-            /* Viene de App.vue methods userRegistered(user) */
-            var date = new Date();
-            /** Con Vuex no se necesita emitir */
-            //this.$emit('userRegistered', user);
-
-            /* Viene de App.vue methods userRegistered(user) AGREGAR $store.state*/
+            /*** Va a store.js mutations ***/
+            this.$store.commit('register', user.id);
+            /*
+            const date = new Date;
             user.registered = true;
-            this.$store.state.registrations.push({ userId: user.id, name: user.name, date: date.getMonth() + '/' + date.getDay() });
+            this.$store.state.registrations.push({userId: user.id, name: user.name, date: date.getMonth() + '/' + date.getDay()})
+            */
         }
     }
 });
@@ -44891,34 +44890,20 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
         registrations: 'registrations',
         total: 'totalRegistrations'
-    }), {
-        otherComputed: function otherComputed() {
-            /// Otras computed del componente particular
-        }
-    }),
-    /* Al agregar mapGetters ya no necesitamos los computed individuales 
-    /***  Agregar getters   
-    registrations(){
-        return this.$store.getters.registrations;
-    },
-     /***  Agregar getters   
-    total() {
-        return this.$store.getters.totalRegistrations;
-    },
-    },
-    */
-
+    })),
     methods: {
         unregister: function unregister(registration) {
-            /* Con Vuex no se necesita emit 
-               this.$emit('userUnregistered', registration);
-               */
-            /* Viene de App.vue AGREGAR $store.state*/
-            var user = this.$store.state.users.find(function (user) {
-                return user.id == registration.userId;
+            this.$store.commit({
+                type: 'unregister',
+                userId: registration.userId
+            });
+            /*** Va a store.js mutations 
+            const user = this.$store.state.users.find(user => {
+            return user.id == registration.userId;
             });
             user.registered = false;
             this.$store.state.registrations.splice(this.$store.state.registrations.indexOf(registration), 1);
+            */
         }
     }
 });
@@ -45034,6 +45019,44 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
         },
         totalRegistrations: function totalRegistrations(state) {
             return state.registrations.length;
+        }
+    },
+
+    mutations: {
+        register: function register(state, userId) {
+            /*
+            const date = new Date;
+            user.registered = true;
+            this.$store.state.registrations.push({userId: user.id, name: user.name, date: date.getMonth() + '/' + date.getDay()})
+            */
+            var date = new Date();
+            var user = state.users.find(function (user) {
+                return user.id == userId;
+            });
+            user.registered = true;
+            var registration = {
+                userId: userId,
+                name: user.name,
+                date: date.getMonth() + '/' + date.getDay()
+            };
+            state.registrations.push(registration);
+        },
+        unregister: function unregister(state, payload) {
+            var user = state.users.find(function (user) {
+                return user.id == payload.userId;
+            });
+            user.registered = false;
+            var registration = state.registrations.find(function (registration) {
+                return registration.userId == payload.userId;
+            });
+            state.registrations.splice(state.registrations.indexOf(registration), 1);
+            /*
+            const user = this.$store.state.users.find(user => {
+                return user.id == registration.userId;
+            });
+            user.registered = false;
+            this.$store.state.registrations.splice(this.$store.state.registrations.indexOf(registration), 1);
+            */
         }
     }
 

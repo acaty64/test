@@ -19,14 +19,13 @@
         },
         methods: {
             registerUser(user) {
-                /* Viene de App.vue methods userRegistered(user) */
+                /*** Va a store.js mutations ***/
+                this.$store.commit('register', user.id);
+                /*
                 const date = new Date;
-                /** Con Vuex no se necesita emitir */
-                //this.$emit('userRegistered', user);
-
-                /* Viene de App.vue methods userRegistered(user) AGREGAR $store.state*/
                 user.registered = true;
                 this.$store.state.registrations.push({userId: user.id, name: user.name, date: date.getMonth() + '/' + date.getDay()})
+                */
             },
         }
     }
