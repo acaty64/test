@@ -5,7 +5,6 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
 	state: {
-		/*  Viene de Registrations.vue */
         registrations: [],
         users: [
             {id: 1, name: 'Max', registered: false},
@@ -15,7 +14,21 @@ export const store = new Vuex.Store({
         ]
 	},
 
+    getters: {
+        unregisteredUsers(state) {
+            return state.users.filter(user => {
+                return !user.registered;
+            });
+        },
 
+        registrations(state) {
+            return state.registrations;
+        },
+
+        totalRegistrations(state) {
+            return state.registrations.length;
+        },
+    }
 
 });
 

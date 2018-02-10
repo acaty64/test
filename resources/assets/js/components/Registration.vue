@@ -11,15 +11,10 @@
 
 <script>
     export default {
-        /* Con Vuex no necesitamos props; debe incluirse computed  
-        props: ['users'],
-        */
         computed: {
             users() {
-                /* Agregar filtro */
-                return this.$store.state.users.filter(user => {
-                    return !user.registered;
-                });
+                /* Agregar getters (like a property)*/
+                return this.$store.getters.unregisteredUsers;
             }
         },
         methods: {

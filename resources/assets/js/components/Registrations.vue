@@ -14,21 +14,31 @@
 </template>
 
 <script>
-    export default {
-    	/* Con Vuex no necesitamos props; debe incluirse computed 
-        props: ['registrations'],
-    	 */
-        computed: {
-        	/** AGREGAR $store.state */
-            registrations(){
-                return this.$store.state.registrations;
-            },
+    import { mapGetters } from 'vuex';
 
-        	/** AGREGAR $store.state */
-            total() {
-                return this.$store.state.registrations.length;
+    export default {
+        computed:{ 
+            ...mapGetters({
+                        registrations: 'registrations',
+                        total: 'totalRegistrations',
+                    }),
+
+            otherComputed(){
+                /// Otras computed del componente particular
             },
         },
+            /* Al agregar mapGetters ya no necesitamos los computed individuales 
+            /***  Agregar getters   
+            registrations(){
+                return this.$store.getters.registrations;
+            },
+
+            /***  Agregar getters   
+            total() {
+                return this.$store.getters.totalRegistrations;
+            },
+        },
+            */
 
         methods: {
             unregister(registration) {
