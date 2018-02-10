@@ -32,11 +32,6 @@ export const store = new Vuex.Store({
 
     mutations: {
         register(state, userId) {
-            /*
-            const date = new Date;
-            user.registered = true;
-            this.$store.state.registrations.push({userId: user.id, name: user.name, date: date.getMonth() + '/' + date.getDay()})
-            */
             const date = new Date;
             const user = state.users.find(user => {
                 return user.id == userId;
@@ -67,6 +62,13 @@ export const store = new Vuex.Store({
             this.$store.state.registrations.splice(this.$store.state.registrations.indexOf(registration), 1);
             */
         },
+    },
+
+    actions: {
+        register(context, userId) {
+            /** Viene de Registration.vue */
+            context.commit('register', userId);
+        }
     },
 
 });

@@ -19,12 +19,10 @@
         },
         methods: {
             registerUser(user) {
-                /*** Va a store.js mutations ***/
+                /*** Va a store.js actions ***/
+                this.$store.dispatch('register', user.id);
+                /**
                 this.$store.commit('register', user.id);
-                /*
-                const date = new Date;
-                user.registered = true;
-                this.$store.state.registrations.push({userId: user.id, name: user.name, date: date.getMonth() + '/' + date.getDay()})
                 */
             },
         }

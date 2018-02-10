@@ -44710,12 +44710,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         registerUser: function registerUser(user) {
-            /*** Va a store.js mutations ***/
+            /*** Va a store.js actions ***/
+            this.$store.dispatch('register', user.id);
+            /**
             this.$store.commit('register', user.id);
-            /*
-            const date = new Date;
-            user.registered = true;
-            this.$store.state.registrations.push({userId: user.id, name: user.name, date: date.getMonth() + '/' + date.getDay()})
             */
         }
     }
@@ -45024,11 +45022,6 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 
     mutations: {
         register: function register(state, userId) {
-            /*
-            const date = new Date;
-            user.registered = true;
-            this.$store.state.registrations.push({userId: user.id, name: user.name, date: date.getMonth() + '/' + date.getDay()})
-            */
             var date = new Date();
             var user = state.users.find(function (user) {
                 return user.id == userId;
@@ -45057,6 +45050,13 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
             user.registered = false;
             this.$store.state.registrations.splice(this.$store.state.registrations.indexOf(registration), 1);
             */
+        }
+    },
+
+    actions: {
+        register: function register(context, userId) {
+            /** Viene de Registration.vue */
+            context.commit('register', userId);
         }
     }
 
