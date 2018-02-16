@@ -9,7 +9,8 @@
     <div class="container">
 
 		<App></App>
-
+<br>
+<dcurso-component/>
 	</div>
 @endsection
 

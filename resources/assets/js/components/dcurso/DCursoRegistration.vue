@@ -1,30 +1,22 @@
 <template>
     <div id="registration">
-        <h3>Register here</h3>
+        <h3>Seleccione el curso</h3>
         <hr>
-        <div class="row" v-for="user in users">
-            <h4>{{ user.name }}</h4>
-            <button @click="registerUser(user)">Register</button>
+        <div class="row" v-for="item in items">
+            <p>{{ item.wcurso }}</p>
+            <button @click="registerItem(item)">Seleccionar</button>
         </div>
     </div>
 </template>
 
 <script>
     export default {
-        computed: {
-            users() {
-                /* Agregar getters (like a property)*/
-                return this.$store.getters.unregisteredUsers;
-            }
-        },
+        props: ['items'],
         methods: {
-            registerUser(user) {
-                /*** Va a store.js actions ***/
-                this.$store.dispatch('register', user.id);
-                /**
-                this.$store.commit('register', user.id);
-                */
-            },
+            registerItem(item) {
+                this.$emit('itemRegistered', item);
+                item.registered != false;
+            }
         }
     }
 </script>

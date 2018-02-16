@@ -18,7 +18,8 @@ window.Vue = require('vue');
  */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
-Vue.component('App', require('./components/App.vue'));
+Vue.component('App', require('./components/register/App.vue'));
+Vue.component('dcurso-component', require('./components/dcurso/DCursoComponent.vue'));
 
 /*
 const app = new Vue({
@@ -28,10 +29,12 @@ const app = new Vue({
 
 import Vue from 'vue'
 //import App from './components/App.vue'
-import { store } from './store/store.js' ;
+import { store } from './store/register/store.js' ;
+//import { dcursoStore } from './store/dcurso/store.js' ;
 
 new Vue({
   el: '#app',
-  store: store ,
+  store,
+//  dcursoStore,
 //  render: h => h(App)
 })

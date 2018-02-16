@@ -1,5 +1,5 @@
 <template>
-    <div id="registrations">
+    <div id="registrations" dusk="app-registrations">
         <div class="summary">
             <h3>Registrations</h3>
             <h5>Total: {{ total }}</h5>
