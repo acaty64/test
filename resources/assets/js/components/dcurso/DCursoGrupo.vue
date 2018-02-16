@@ -10,17 +10,32 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex';
     export default {
-        props: ['grupos'],
+//        props: ['grupos'],
         data(){ 
             return {
                 item: []
             }
         },
+        computed:{
+            ...mapGetters({
+                grupos: 'grupos'
+            }),
+
+            otherComputed(){
+
+            },
+        },
         methods: {
             registerItem() {
                 this.$emit('changeGrupo', this.item);
-            }
+            },
+
+            changeGrupo(item){
+                this.$store.state.grupo_id = item.grupo_id;
+            },
+
         }
     }
 </script>

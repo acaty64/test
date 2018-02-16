@@ -8,9 +8,10 @@
 	</div>
     <div class="container">
 
-		<App></App>
-<br>
-<dcurso-component/>
+		<App id="appRegister"></App>
+		<br>
+		<dcurso-component id="appDcurso"><dcurso-component/>
+			
 	</div>
 @endsection
 

@@ -29,12 +29,17 @@ const app = new Vue({
 
 import Vue from 'vue'
 //import App from './components/App.vue'
-import { store } from './store/register/store.js' ;
-//import { dcursoStore } from './store/dcurso/store.js' ;
+import { registerStore } from './store/register/store.js' ;
+import { dcursoStore } from './store/dcurso/store.js' ;
 
-new Vue({
-  el: '#app',
-  store,
-//  dcursoStore,
+var appRegister = new Vue({
+  el: '#appRegister',
+  store: registerStore,
+//  render: h => h(App)
+})
+
+var appDcurso = new Vue({
+  el: '#appDcurso',
+  store: dcursoStore,
 //  render: h => h(App)
 })

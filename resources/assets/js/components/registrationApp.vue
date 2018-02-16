@@ -1,18 +1,15 @@
 <template>
-  <div>
-    <!--app-registration @userRegistered="userRegistered" :users="unregisteredUsers"></app-registration-->
-    <app-registration></app-registration>
-    <!--app-registrations @userUnregistered="userUnregistered" :registrations="registrations"></app-registrations-->
-    <app-registrations></app-registrations>
+  <div id="app">
+    <app-registration @userRegistered="userRegistered" :users="unregisteredUsers"></app-registration>
+    <app-registrations @userUnregistered="userUnregistered" :registrations="registrations"></app-registrations>
   </div>
 </template>
 
 <script>
-  import Registration from './Registration.vue';
-  import Registrations from './Registrations.vue';
+  import Registration from './components/Registration.vue';
+  import Registrations from './components/Registrations.vue';
 
 export default {
-		/**** Va en store.js
     data() {
         return {
             registrations: [],
@@ -24,8 +21,6 @@ export default {
             ]
         }
     },
-	*/
-    /* Eliminar
     computed: {
         unregisteredUsers() {
             return this.users.filter((user) => {
@@ -33,26 +28,20 @@ export default {
             });
         }
     },
-    */
-    /* Eliminar
     methods: {
-    	/* Va a Registration.vue methods  
-      	userRegistered(user) {
-	          const date = new Date;
-	          this.registrations.push({userId: user.id, name: user.name, date: date.getMonth() + '/' + date.getDay()})
-      	},
-      	*/
-      	/* Va a Registrations.vue methods
+      userRegistered(user) {
+          const date = new Date;
+          this.registrations.push({userId: user.id, name: user.name, date: date.getMonth() + '/' + date.getDay()})
+      },
         userUnregistered(registration) {
           const user = this.users.find(user => {
               return user.id == registration.userId;
           });
           user.registered = false;
           this.registrations.splice(this.registrations.indexOf(registration), 1);
+
         }
-        */
-    /*
-    }, */
+    },
     components: {
         appRegistration: Registration,
         appRegistrations: Registrations
